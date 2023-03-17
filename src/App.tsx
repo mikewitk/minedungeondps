@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import './App.css';
-import { weaponsInfo, IWeaponInfo } from './listofWeapons';
+import { useState } from "react";
+import "./App.css";
+import { weaponsInfo, IWeaponInfo } from "./listofWeapons";
 
 function App() {
   const [selectedWeapon, setSelectedWeapon] = useState<IWeaponInfo>(
     weaponsInfo[0]
   );
-  const [weaponDamage, setWeaponDmg] = useState([]);
+  const [weaponDamage, setWeaponDmg] = useState<Array<string>>([]);
   const [weaponDps, setWeaponDps] = useState(0);
   const [saved, setSaved] = useState<Array<{ name: string; dps: number }>>([]);
 
-  function handleWeaponSelect(e) {
+  function handleWeaponSelect(e: React.ChangeEvent<HTMLSelectElement>) {
     const chosenWeapon = weaponsInfo.find(
       (weapon) => weapon.group === e.target.value
     );
@@ -19,8 +19,8 @@ function App() {
     }
   }
 
-  function handleDmgInput(e) {
-    const dmgArr = e.target.value.split(',');
+  function handleDmgInput(e: React.ChangeEvent<HTMLInputElement>) {
+    const dmgArr = e.target.value.split(",");
     setWeaponDmg(dmgArr);
   }
 
