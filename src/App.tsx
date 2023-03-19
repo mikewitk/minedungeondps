@@ -1,6 +1,11 @@
 import { useState } from "react";
 import "./App.css";
+import DamageInput from "./components/DamageInput/DamageInput";
+import Title from "./components/Title/Title";
+import WeaponCard from "./components/WeaponCard/WeaponCard";
+import WeaponSelector from "./components/WeaponSelector/WeaponSelector";
 import { weaponsInfo, IWeaponInfo } from "./listofWeapons";
+import { IWeaponCard } from "./types";
 
 function App() {
   const [selectedWeapon, setSelectedWeapon] = useState<IWeaponInfo>(
@@ -8,7 +13,7 @@ function App() {
   );
   const [weaponDamage, setWeaponDmg] = useState<Array<string>>([]);
   const [weaponDps, setWeaponDps] = useState(0);
-  const [saved, setSaved] = useState<Array<{ name: string; dps: number }>>([]);
+  const [saved, setSaved] = useState<Array<IWeaponCard>>([]);
 
   function handleWeaponSelect(e: React.ChangeEvent<HTMLSelectElement>) {
     const chosenWeapon = weaponsInfo.find(
@@ -40,32 +45,23 @@ function App() {
 
   return (
     <div className="App">
-      <h3>Minecraft Dungeons: DPS Calculator</h3>
-      <div>
-        <label htmlFor="weapon-select">Select your weapon:</label>
-        <select
-          value={selectedWeapon.group}
-          onChange={handleWeaponSelect}
-          id="weapon-select"
-        >
-          {weaponsInfo.map((weaponInfo) => (
-            <option value={weaponInfo.group}>{weaponInfo.group}</option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label htmlFor="damage-input">Add dmg separated by comma</label>
-        <p>Combo length: {selectedWeapon.atkSpdPattern.length}</p>
-        <input type="text" onChange={handleDmgInput} />
-      </div>
+      <Title />
+      <WeaponSelector
+        handleWeaponSelect={handleWeaponSelect}
+        selectedWeapon={selectedWeapon}
+      />
+      <DamageInput
+        handleDmgInput={handleDmgInput}
+        selectedWeapon={selectedWeapon}
+      />
       <button onClick={calculateDps}>Calculate</button>
       <div>
-        <h4>Your DPS is:</h4> <p>{weaponDps}</p>
+        <h4>Armory:</h4>
       </div>
-      <ul>
+      <ul className="container">
         {saved.map((weapon) => (
-          <li>
-            {weapon.name} : {weapon.dps}
+          <li style={{ width: "fit-content" }}>
+            <WeaponCard weapon={weapon} />
           </li>
         ))}
       </ul>
