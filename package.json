@@ -1,4 +1,5 @@
 {
+  "homepage": "https://mikewitk.github.io/minedungeondps/",
   "name": "vite-react-typescript-starter",
   "private": true,
   "version": "0.0.0",
@@ -7,13 +8,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "postinstall": "node ./node_modules/husky/lib/bin install",
-    "deploy": "git push origin `git subtree split --prefix dist main`:gh-pages --force"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run dev"
-    }
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -23,6 +19,7 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
+    "gh-pages": "^5.0.0",
     "husky": "^8.0.3",
     "typescript": "^4.9.3",
     "vite": "^4.1.0"
